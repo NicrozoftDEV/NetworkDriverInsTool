@@ -1,0 +1,5 @@
+/target
+# Generated/copied driver catalogs (large; not source — provide at build time)
+nic-installer/assets/*.7z
+nzndit/assets/drvceo/*.7z
+nzndit/assets/drvceo/*.Scindex

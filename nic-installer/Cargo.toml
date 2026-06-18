@@ -1,0 +1,41 @@
+[package]
+name = "nic-installer"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Offline network-driver installer / catalog (360 Driver Master + DrvCeo), reverse-engineered"
+
+[lib]
+name = "nic_installer"
+path = "src/lib.rs"
+
+[[bin]]
+name = "nic-installer"
+path = "src/main.rs"
+
+[features]
+# Bake the driver store (drivers.dat + all packages) into the binary as a
+# solid 7z at assets/bundle.7z. Build with `--features embedded`.
+embedded = []
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+anyhow = "1"
+rusqlite = { version = "0.32", features = ["bundled"] }
+sevenz-rust2 = { version = "0.21", features = ["aes256", "util"] }
+zip = "2"
+encoding_rs = "0.8"
+
+[build-dependencies]
+embed-manifest = "1"
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.58", features = [
+    "Win32_Foundation",
+    "Win32_Devices_DeviceAndDriverInstallation",
+    "Win32_System_SystemInformation",
+    "Win32_System_Registry",
+    "Win32_UI_Shell",
+    "Wdk_System_SystemServices",
+] }
